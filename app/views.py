@@ -46,13 +46,16 @@ def user_play():
 # what to do to check if there is a winner, 
 @app.route('/check_win/', methods=['POST']) 
 def check_win(): 
+	# receive the input parameters 
+	g.board = eval(request.form['b'])
 	# returns a json of the result of check_win()
 	return jsonify(player=g.check_win())
 
 # what to do when the computer must play, 
 @app.route('/comp_play/', methods=['POST'])
 def comp_play(): 
-	# get the parameters 
+	# receive the input parameters 
+	g.board = eval(request.form['b'])
 	difficulty = int(request.form['val'])
 
 	# save the board 
@@ -70,6 +73,9 @@ def comp_play():
 # and what to do when the game is restarted
 @app.route('/restart/', methods=['POST'])
 def restart():
+	# receive the input parameters 
+	g.board = eval(request.form['b'])
+	
 	# clears the board
 	g.clear_board()
 

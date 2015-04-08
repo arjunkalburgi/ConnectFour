@@ -150,16 +150,22 @@
 
 			localStorage.setItem("board", '([0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0])'); 
 			
-			$.post('/restart/',
-				{},
-				function(json) {
-					board = json.board;
-					update_board(board);
+			for (r=0; r<7; r++) {
+				for (c=0; c<7; c++) {
+					document.getElementById(String(r)+String(c)).style.backgroundColor = "white";
+				}
+			}
 
-					$(message).hide()
-					$(endgame).hide()
-					cont = 1
-				});
+			// $.post('/restart/',
+			// 	{},
+			// 	function(json) {
+			// 		board = json.board;
+			// 		update_board(board);
+
+			// 		$(message).hide()
+			// 		$(endgame).hide()
+			// 		cont = 1
+			// 	});
 		}
 
 		function change_difficulty() {
