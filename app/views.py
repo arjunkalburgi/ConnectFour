@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, request
+from flask import flash, redirect, render_template, request, session
 from app import app
 
 from flask import jsonify 
@@ -33,7 +33,8 @@ def game():
 # what to do when the user must play, 
 @app.route('/user_play/', methods=['POST'])
 def user_play(): 
-	# gets the column that the user wants
+	# receive the input parameters 
+	g.board = eval(request.form['b'])
 	user_col = request.form['col']
 
 	# adds a user piece to that column

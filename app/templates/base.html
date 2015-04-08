@@ -18,6 +18,7 @@
 			}
 		});
 
+		var shitassbitchnigga; 
 		var cont = 1;
 
 		function play(col) {
@@ -34,7 +35,7 @@
 				// ajax request for the board 
 				// based on the users click selection
 				$.post('/user_play/',
-					{col: col},
+					{col: col, b: localStorage.getItem('board')},
 					function(json) {
 
 						// update the board with what's new
@@ -43,7 +44,7 @@
 						
 						// check if the player has won! 
 						$.post('/check_win/', 
-							{}, 
+							{b: localStorage.getItem('board')}, 
 							function(json) {
 								player = json.player;
 								
@@ -57,7 +58,7 @@
 								} else {
 									// go get comps play board
 									$.post('/comp_play/',
-										{val: localStorage.getItem("difficulty")}, //, memo: localStorage.getItem("memo")}, 
+										{val: localStorage.getItem("difficulty"),b: localStorage.getItem('board')},
 										function(json) {
 											
 											// update the board with what's new
@@ -81,7 +82,7 @@
 			to put pieces in the board and run end()
 			*/
 			$.post('/check_win/', 
-				{}, 
+				{b: localStorage.getItem('board')}, 
 				function(json) {
 					player = json.player;
 					if (player) {
@@ -96,7 +97,9 @@
 			/*
 			This function receives the board after an ajax from the server
 			Then updates all the spots to reflect what should be shown.
+			Also updates the board in localStorage.
 			*/
+			b = [[],[],[],[],[],[],[]];
 			for (r=0; r<7; r++) {
 				for (c=0; c<7; c++) {
 					if (board[r][c] == 2) {
@@ -108,8 +111,11 @@
 					if (board[r][c] == 0) {
 						document.getElementById(String(r)+String(c)).style.backgroundColor = "white";
 					}
+					b[r].push(board[r][c])
 				}
 			}
+			s = '([' + String(b[0]) + '],[' + String(b[1]) + '],[' + String(b[2]) + '],[' + String(b[3]) + '],[' + String(b[4]) + '],[' + String(b[5]) + '],[' + String(b[6]) + '])';
+			localStorage.setItem("board", s)
 		}
 
 		function end(player) {
@@ -138,10 +144,12 @@
 
 		function restart() {
 			/*
-			simple post request to tell the server 
-			to clear the board.
+			simple post request to tell the server and 
+			the client to clear the board.
 			*/
 
+			localStorage.setItem("board", '([0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0])'); 
+			
 			$.post('/restart/',
 				{},
 				function(json) {
