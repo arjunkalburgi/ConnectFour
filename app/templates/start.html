@@ -1,0 +1,39 @@
+<body style="background-color: yellow; text-align: center">
+	{%extends "base.html" %}
+	{% block content %}
+	<div>
+		<h1>Hello, Friend </h1>
+	</div>
+	<div style="font-size: larger;">
+		<b>To play ConnectFour, go over to the Game tab, and start playing!</b> <br/>
+		<br/>
+		If you've never played ConnectFour, it's similar to the classic tic-tac-toe game, but the difference is that <br/>
+		in this game, players need to make a row of four (thus connecting four) of their pegs in a straight line, either horizontally, vertically or diagonally. <br/>
+		You will be taking turns with the computer to drop peices into the columns. <br/>
+		<br/>
+		Over in the game tab, you can put your peices into the columns by clicking the buttons <br/>
+		on top of each column labelled "Column 1", "Column 2", etc. <br/>
+		You are playing as red, and the computer is yellow.<br/>
+		<br/>
+		You can also choose the difficulty at which you play. Here there are levels from 1-5. Please make sure you press <br/> 
+		"Submit" if you change from the default, which is 1. <br/>
+		Give yourself a pat on the back if you can beat the computer at all 5 levels. <br/>
+		<b>Warning, computation time at levels 4 and 5 is very large, the computer may be slow</b><br/>
+		<br/>
+		<form>
+			<input type="radio" name="difficulty" value="1" checked>1
+			<br/>
+			<input type="radio" name="difficulty" value="3">2
+			<br/>
+			<input type="radio" name="difficulty" value="5">3
+			<br/>
+			<input type="radio" name="difficulty" value="7">4
+			<br/>
+			<input type="radio" name="difficulty" value="9">5
+			<br/><br/>
+			<a href="javascript:change_difficulty()"> Submit.
+		</form> 
+
+	</div>
+	{% endblock %}
+</body>

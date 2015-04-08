@@ -1,0 +1,96 @@
+For this exercise you are going to submit a proposal for your final project. 
+
+For your final project in this course you will work in teams of 2 on a project of your own design. 
+We want you to come up with a project that you're excited to work on.
+
+Proposal Expectations:
+
+The instructors will be grading your project proposals. They will provide you with feedback on the 
+feasibility and appropriateness of your project ideas. For the purpose of marking this exercise, 
+you will be graded on the quality of your project proposal. To achieve full marks for this exercise,
+your proposal must be succinct and clear on what you intend to do. Additionally, you must show that 
+you have thoughtfully broken the task down into well-defined milestones with expected completion dates. 
+
+For your project proposal, you must submit a document (Plain text, rich text or pdf files ONLY. DO 
+NOT submit a .doc or .docx file) containing the following:
+
+* Project Title
+* Team Members Full Names (note you must work on a team of 2 for the project)
+Brief description of what your project idea is. Be clear on what the demonstration at the end will 
+look like.
+* Document 3-6 Milestones for your project. Estimate how long each milestone will take  and give an 
+expected completion date. Give a 2-3 sentence description of what you expect to do for each milestone.
+Each milestone should be up to a weeks worth of work. You should have something to demo at the end of 
+each milestone. Be explicit about what the demo for each milestone would be. Note we do NOT want to see
+milestones where each milestone implements a separate, non demonstrate-able piece of code and the final
+milestone is to integrate them all together. This is bad planning and can leave you without a demo-able
+project if you fail to reach the integration milestone.
+If the instructors have concerns about your proposal (i.e. your idea is too big or too small, or your 
+milestones are not appropriately defined etc.) they will provide you with feedback and you will be 
+required to revise your proposal until it is appropriate. You will only be graded on the first submission.
+
+Project Expectations:
+
+Our expectations/criteria for a good project are:
+
+your project should be approximately the same size as one of the assignments we had you do in class. 
+This should be something you can reasonably complete in approximately 3-4 weeks.
+your project should demonstrate your command of the material covered in class. It should demonstrate 
+your ability to write clean, efficient code, and your ability to solve algorithmically challenging 
+problems. Consider that a lot of focus this term has been on algorithms, like search and dynamic 
+programming. Additionally, when we say clean & efficient code, you should write code using good style
+and should be mindful of the time complexity of your code.
+Your project should be "demo-able" and demonstrate your ability to work with python in some capacity.
+You may choose to also use the Arduino, however it is not a requirement.
+
+Your project will be graded in two phases. First, you will be asked to demo your project on the last 
+day of classes. You will demo your project for one of the instructors and a TA. After the demo, they
+will ask you questions about your project. You will be graded both on the quality of your presentation 
+and on your ability to answer these questions. Second, you will be asked to submit your code so it 
+can be graded for style, efficiency and quality.
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+Group: 
+Arjun Kalburgi, 1388774
+Nicholas Li, 1408218
+
+Title: 
+(Untitled for now)
+
+Description: 
+Plan is to create an information website where users can gain information 
+about a particular topic. We still haven't decided on a topic yet but we 
+will be using data from the Canadian government's open database. 
+The general idea of the programming part of the project is to have a 
+server (the python) and a client (the website) communicate to each other
+similar to what we did in the previous Assignment. The Objective of the 
+our project will be to learn and understand how the server/client 
+communication is done over the Internet. 
+We are also going to try to get our project working on the web, so that
+any potential user can visit our web-page.
+
+
+Milestones (Date of Expected Completion): 
+	1. Set up Flask (Mar 14th weekend)
+			Based on the initial reading of how Flask works, we'll need 
+			to set it up as a python server. Once we get it to display
+			a simple web-page we will need to do the initial preparations
+			for our website.
+	2. Simple templates (Mar 21st weekend)
+			Once Flask is set up we can create the HTML templates for 
+			the website. The templates will need to be ready to be
+			handed data from the server while loading to be displayed
+			to the user. 
+	3. Push server data to website (Mar 28th weekend)
+			Once the templates are ready to receive data, we can create
+			python program to parse the data from the data files to be 
+			delivered to the website. This will be similar to the 
+			previous exercises that required the use of parsing a CSV 
+			file. 
+	4. CSS and bug fixes (Apr 11th weekend)
+			At this point the entire website should be working, we'll 
+			just want to make it look pretty and fix any bugs in the 
+			program!

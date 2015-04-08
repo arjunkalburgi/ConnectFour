@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% if title %}
+	<title>{{title}} - c275</title>
+	{% else %}
+	<title>Welcome to a c275 project</title>
+	{% endif %}
+
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(endgame).hide()
+			restart()
+			if (!sessionStorage.getItem("difficulty")) {
+				sessionStorage.setItem("difficulty", 5); 
+			}
+			if (!localStorage.getItem("memo")) { /* || localStorage.getItem("memo") == undefined*/
+				localStorage.setItem("memo", '{}');
+			}
+		});
+		
+		var cont = 1
+		var mess = 1
+
+		function play(col) {
+			/*
+			This function should basically reflect everything from test.py
+			It's wrapped around an if for cont so that once the game is 
+			over the user can't keep puttin in pieces randomly.
+			*/
+			
+			if (cont) {
+				// ajax request for the board 
+				// based on the users click selection
+				$.post('/user_play/',
+					{col: col},
+					function(json) {
+						board = json.board;
+						update_board(board);
+					});
+
+				// check win
+				check4win()
+				
+				// go get comps play board
+				$.post('/comp_play/',
+					{val: sessionStorage.getItem("difficulty"), memo: localStorage.getItem("memo")}, 
+					function(json) {
+						console.log(json.memo)
+						localStorage.setItem("memo", json.memo)
+						board = json.board; 
+						update_board(board)
+					});
+			
+				// check win
+				check4win(); 
+			}
+		}
+		
+		function check4win() {
+			/*
+			This function is simply an ajax request 
+			for the servers check win. 
+			If someone did win, we turn off the ability
+			to put pieces in the board and run end()
+			*/
+			$.post('/check_win/', 
+				{}, 
+				function(json) {
+					player = json.player;
+					if (player) {
+						// end game and refresh. 
+						cont = 0
+						end(player);
+					}
+				});
+		}
+
+		function update_board(board) {
+			/*
+			This function reiceves the board after an ajax from the server
+			Then updates all the spots to reflect what should be shown.
+			*/
+			for (r=0; r<7; r++) {
+				for (c=0; c<7; c++) {
+					if (board[r][c] == 2) {
+						document.getElementById(String(r)+String(c)).style.backgroundColor = "red";
+					}
+					if (board[r][c] == 1) {
+						document.getElementById(String(r)+String(c)).style.backgroundColor = "yellow";
+					}
+					if (board[r][c] == 0) {
+						document.getElementById(String(r)+String(c)).style.backgroundColor = "white";
+					}
+				}
+			}
+		}
+
+		function end(player) {
+			/*
+			This function quits the game and allows the user to play again
+			*/
+			if (mess) {
+				// show button to restart 
+				console.log("Congratulations, " + player + " won!");
+				$(endgame).show()
+				// message to users
+				if (player == 1) {
+					$(message).text("Sorry, you lost, would you like to try again?")
+				} else {
+					$(message).text("Nice job, want to play again?")
+				}
+
+				$(message).show()
+				mess = 0
+			}
+		}
+
+		function restart() {
+			/*
+			simple post request to tell the server 
+			to clear the board.
+			*/
+			$.post('/restart/',
+				{},
+				function(json) {
+					board = json.board;
+					update_board(board);
+
+					$(message).hide()
+					$(endgame).hide()
+					cont = 1
+					mess = 1
+				});
+		}
+
+		function change_difficulty() {
+			value = $('input[name=difficulty]:checked').val();
+			console.log("change_difficulty"); 
+			console.log(value);
+			// put value in sessionStorage.
+			sessionStorage.setItem("difficulty",value)
+		}
+	</script>
+</head>
+<body>
+	<div style="background-color: white; text-align: center">
+		<br/>
+		<div>Connect4 <br/><a href="/startup">Home</a> | <a href="/game">Game</a> | <a href="/more">More</a></div>
+		<hr>
+		<div id="message"></div>
+		<div id="endgame">
+			<a href="javascript:restart()">Play Again.</a>
+		</div>
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+			<ul>
+				{% for message in messages %}
+					<li>{{ message }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		{% endwith %}
+		<hr>
+		<br/>
+	</div>
+	{% block content %}{% endblock %}
+</body>
+</html>
