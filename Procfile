@@ -1,1 +1,1 @@
-web: gunicorn connectfour.wsgi --log-file -
+web: gunicorn app:app --log-file -
