@@ -1,9 +1,11 @@
 <body style="background-color: yellow; text-align: center">
 	{%extends "base.html" %}
 	{% block content %}
-	<div>
-		<h1>Hello, Friend </h1>
-	</div>
+
+	<!-- This is the website splashscreen that tells users about the game and allows -->
+	<!-- them to change the difficulty of the program. -->
+
+	<h1>Hello, Friend </h1>
 	<div style="font-size: larger;">
 		<b>To play ConnectFour, go over to the Game tab, and start playing!</b> <br/>
 		<br/>
@@ -29,11 +31,10 @@
 			<br/>
 			<input type="radio" name="difficulty" value="7">4
 			<br/>
-			<input type="radio" name="difficulty" value="9">5
+			<input type="radio" name="difficulty" value="8">5
 			<br/><br/>
 			<a href="javascript:change_difficulty()"> Submit.
 		</form> 
-
 	</div>
 	{% endblock %}
 </body>
