@@ -61,8 +61,20 @@ class board:
 		# 	return 10
 
 		# check for Connect Three
-		if checkthree(row, col, i, self.board): 
-			return 8
+		# if checkthree(row, col, i, self.board): 
+		# 	return 8
+
+		h = checkthree2(row, col, i, self.board)
+		if h: 
+			# if I'm playing as two and the 
+			# connect line I'm making is for two
+			# Then that means, two will win, so mark that 
+			# very low
+			if h == p == 2:
+				return -8
+			else: 
+				return 8 
+
 
 		return 0
 
@@ -271,140 +283,148 @@ def rightupleftdown(b,i,col):
 
 
 
-def checkfour(row, col, i, b): 
-	# check for four vertical 	
-	if i < 4: 
-		if b[i+1][col] == b[i+2][col] and b[i+1][col] == b[i+3][col]!=0: 
-			return True
-
+def checkthree2(row, col, i, b): 
 	if col == 0: 
-		# check for four flat in the row. 
-		if row[col+1] == row[col+2] and row[col+2] == row[col+3]!=0:
-			return True
-		if i > 2 and dia1con1(i,b,col):
-			return True
-		if i < 4 and dia2con1(i,b,col):
-			return True
-
+		# check for three flat in the row. 
+		if row[col+1] == row[col+2]!=0:
+			return row[col+1]
+		# check for three diagonal
+		if i > 2 and twoupright2(b, i, col):
+			return twoupright2(b, i, col)
+		if i < 4 and twodownright2(b, i, col): 
+			return twodownright2(b, i, col)
 	if col == 1: 
-		# check for four flat in the row. 
-		if row[col+1] == row[col+2] and row[col+2] == row[col+3]!=0 or \
-		 row[col-1] == row[col+1] and row[col+1] == row[col+2]!=0:
-			return True
-		if i>2 and dia1con1(i,b,col):
-			return True
-		if i<4 and dia2con1(i,b,col):
-			return True
-		if i>1 and i<6 and dia1con2(i,b,col):
-			return True
-		if i>0 and i<5 and dia2con2(i,b,col):
-			return True
-
+		# check for three flat in the row. 
+		if row[col+1] == row[col+2]!=0:
+			return row[col+1]
+		if row[col-1] == row[col+1]!=0:
+			return row[col+1]
+		# check for three diagonal
+		if i > 1 and twoupright2(b, i, col):
+			return twoupright2(b, i, col)
+		if i < 5 and twodownright2(b, i, col): 
+			return twodownright2(b, i, col)
+		if i > 0 and i < 5 and leftuprightdown2(b,i,col): 
+			return leftuprightdown2(b,i,col)
+		if i < 6 and i > 1 and rightupleftdown2(b,i,col): 
+			return rightupleftdown2(b,i,col)
 	if col == 2: 
-		# check for four flat in the row. 
-		if row[col+1] == row[col+2] and row[col+2] == row[col+3]!=0 or \
-		 row[col-1] == row[col+1] and row[col+1] == row[col+2]!=0 or \
-		 row[col-2] == row[col-1] and row[col-1] == row[col+1]!=0: 
-			return True
-		if i>2 and dia1con1(i,b,col):
-			return True
-		if i<4 and dia2con1(i,b,col):
-			return True
-		if i>1 and i<6 and (dia1con2(i,b,col) or dia2con3(i,b,col)):
-			return True
-		if i>0 and i<5 and (dia2con2(i,b,col) or dia1con3(i,b,col)):
-			return True
-
+		# check for three flat in the row. 
+		if row[col+1] == row[col+2]!=0:
+			return row[col+1]
+		if row[col-1] == row[col+1]!=0:
+			return row[col-1]
+		if row[col-2] == row[col-1]!=0: 
+			return row[col-2]
+		# check for three diagonal
+		if i > 1 and i < 5 and twoupleft2(b, i, col): 
+			return twoupleft2(b, i, col)
+		if i < 5 and i > 1 and twodownleft2(b, i, col): 
+			return twodownleft2(b, i, col)
+		if i > 1 and twoupright2(b, i, col):
+			return twoupright2(b, i, col)
+		if i < 5 and twodownright2(b, i, col): 
+			return twodownright2(b, i, col)
+		if i > 0 and i < 6 and leftuprightdown2(b,i,col): 
+			return leftuprightdown2(b,i,col)
+		if i > 0 and i < 6 and rightupleftdown2(b,i,col): 
+			return rightupleftdown2(b,i,col)
 	if col == 3:
-		# check for four flat in the row. 
-		if row[col+1] == row[col+2] and row[col+2] == row[col+3]!=0 or \
-		 row[col-1] == row[col+1] and row[col+1] == row[col+2] or \
-		 row[col-2] == row[col-1] and row[col-1] == row[col+1]!=0 or \
-		 row[col-3] == row[col-2] and row[col-2] == row[col-1]!=0: 
-			return True
-		if i>2 and (dia1con1(i,b,col) or dia2con4(i,b,col)):
-			return True
-		if i<4 and (dia2con1(i,b,col) or dia1con4(i,b,col)):
-			return True
-		if i>1 and i<6 and (dia1con2(i,b,col) or dia2con3(i,b,col)):
-			return True
-		if i>0 and i<5 and (dia2con2(i,b,col) or dia1con3(i,b,col)):
-			return True
-
+		# check for three flat in the row. 
+		if row[col+1] == row[col+2]!=0:
+			return row[col+1]
+		if row[col-1] == row[col+1]!=0:
+			return row[col+1]
+		if row[col-2] == row[col-1]!=0:
+			return row[col-1]
+		if row[col-3] == row[col-2]!=0: 
+			return row[col-2]
+		# check for three diagonal
+		if i > 1 and twoupleft2(b, i, col):
+			return twoupleft2(b, i, col)
+		if i > 1 and twoupright2(b, i, col): 
+			return twoupright2(b, i, col)
+		if i < 5 and twodownleft2(b, i, col):
+			return twodownleft2(b, i, col)
+		if i < 5 and twodownright2(b, i, col): 
+			return twodownright2(b, i, col)
+		if i > 0 and i < 6 and leftuprightdown2(b,i,col): 
+			return leftuprightdown2(b,i,col)
+		if i > 0 and i < 6 and rightupleftdown2(b,i,col): 
+			return rightupleftdown2(b,i,col)
 	if col == 4: 
-		# check for four flat in the row. 
-		if row[col-1] == row[col-2] and row[col-2] == row[col-3]!=0 or \
-		 row[col+1] == row[col-1] and row[col-1] == row[col-2]!=0 or \
-		 row[col+2] == row[col+1] and row[col+1] == row[col-1]!=0: 
-			return True
-		if i>2 and dia2con4(i,b,col):
-			return True
-		if i<4 and dia1con4(i,b,col):
-			return True
-		if i>1 and i<6 and (dia1con2(i,b,col) or dia2con3(i,b,col)):
-			return True
-		if i>0 and i<5 and (dia2con2(i,b,col) or dia1con3(i,b,col)):
-			return True
-
+		# check for three flat in the row. 
+		if row[col-1] == row[col-2]!=0:
+			return row[col-1]
+		if row[col+1] == row[col-1]!=0:
+			return row[col-1]
+		if row[col+2] == row[col+1]!=0: 
+			return row[col+1]
+		# check for three diagonal
+		if i > 1 and i < 5 and twoupright2(b, i, col): 
+			return twoupright2(b, i, col)
+		if i < 5 and i > 1 and twodownright2(b, i, col): 
+			return twodownright2(b, i, col)
+		if i > 1 and twoupleft2(b, i, col):
+			return twoupleft2(b, i, col)
+		if i < 5 and twodownleft2(b, i, col): 
+			return twodownleft2(b, i, col)
+		if i > 0 and i < 6 and rightupleftdown2(b,i,col): 
+			return rightupleftdown2(b,i,col)
+		if i > 0 and i < 6 and leftuprightdown2(b,i,col): 
+			return leftuprightdown2(b,i,col)
 	if col == 5: 
-		# check for four flat in the row. 
-		if row[col-1] == row[col-2] and row[col-2] == row[col-3]!=0 or \
-		 row[col+1] == row[col-1] and row[col-1] == row[col-2]!=0:
-			return True
-		if i>2 and dia2con4(i,b,col):
-			return True
-		if i<4 and dia1con4(i,b,col):
-			return True
-		if i>1 and i<6 and dia2con3(i,b,col):
-			return True
-		if i>0 and i<5 and dia1con3(i,b,col):
-			return True
-
+		# check for three flat in the row. 
+		if row[col-1] == row[col-2]!=0:
+			return row[col-1]
+		if row[col+1] == row[col-1]!=0:
+			return row[col+1]
+		# check for three diagonal
+		if i > 1 and twoupleft2(b, i, col):
+			return twoupleft2(b, i, col)
+		if i < 5 and twodownleft2(b, i, col):
+			return twodownleft2(b, i, col)
+		if i > 0 and i < 5 and rightupleftdown2(b,i,col): 
+			return rightupleftdown2(b,i,col)
+		if i < 6 and i > 1 and leftuprightdown2(b,i,col): 
+			return leftuprightdown2(b,i,col)
 	if col == 6: 
-		# check for four flat in the row. 
-		if row[col-1] == row[col-2] and row[col-2] == row[col-3]!=0:
-			return True
-		if i>2 and dia2con4(i,b,col):
-			return True
-		if i<4 and dia1con4(i,b,col):
-			return True
+		# check for three flat in the row. 
+		if row[col-1] == row[col-2]!=0:
+			return row[col-1]
+		# check for three diagonal 
+		if i > 2 and twoupleft2(b, i, col):
+			return twoupleft2(b, i, col)
+		if i < 4 and twodownleft2(b, i, col): 
+			return twodownleft2(b, i, col)
 	
+	# check for three vertical 
+	if i < 4: 
+		if b[i+1][col] == b[i+2][col]!=0: 
+			return b[i+1][col] 
+
 	return False
 
-#diagonal1: /
-#0123 i>2, c<4
-def dia1con1(i,b,c):
-	if b[i-1][c+1] == b[i-2][c+2] and b[i-2][c+2] == b[i-3][c+3]!=0:
-		return True
-#1012 1<i<6, 0<c<6
-def dia1con2(i,b,c):
-	if b[i+1][c-1] == b[i-1][c+1] and b[i-1][c+1] == b[i-2][c+2]!=0:
-		return True
-#2101 0<i<5, 1<c<6
-def dia1con3(i,b,c):
-	if b[i+2][c-2] == b[i+1][c-1] and b[i-1][c+1] == b[i+1][c-1]!=0:
-		return True
-#3210 i<4, 2<c
-def dia1con4(i,b,c):
-	if b[i+3][c-3] == b[i+2][c-2] and b[i+2][c-2] == b[i+1][c-1]!=0:
-		return True
+def twoupright2(b, i, col): 
+	if b[i-1][col+1] == b[i-2][col+2]!=0: 
+		return b[i-1][col+1]
 
-#diagonal2: \
-#0123 i<2, c<2
-def dia2con1(i,b,c):
-	if b[i+1][c+1] == b[i+2][c+2] and b[i+2][c+2] == b[i+2][c+3]!=0:
-		return True
-#1012 0<i<5, 0<c<5
-def dia2con2(i,b,c):
-	if b[i-1][c-1] == b[i+1][c+1] and b[i+1][c+1] == b[i+2][c+2]!=0:
-		return True
-#2101 1<i<6, 1<c<6
-def dia2con3(i,b,c):
-	if b[i-2][c-2] == b[i-1][c-1] and b[i-1][c-1] == b[i+1][c+1]!=0:
-		return True
-#3210 2<i, 2<c
-def dia2con4(i,b,c):
-	if b[i-3][c-3] == b[i-2][c-2] and b[i-2][c-2] == b[i-1][c-1]!=0:
-		return True
+def twodownright2(b, i, col): 
+	if b[i+1][col+1] == b[i+2][col+2]!=0: 
+		return b[i+1][col+1]
 
+def twoupleft2(b, i, col): 
+	if b[i-1][col-1] == b[i-2][col-2]!=0: 
+		return b[i-1][col-1]
 
+def twodownleft2(b, i, col): 
+	if b[i+1][col-1] == b[i+2][col-2]!=0:
+		return b[i+1][col-1]
+
+def leftuprightdown2(b,i,col): 
+	if b[i+1][col+1] == b[i-1][col-1]!=0: 
+		return b[i+1][col+1]
+
+def rightupleftdown2(b,i,col): 
+	if b[i+1][col-1] == b[i-1][col+1]!=0: 
+		return b[i+1][col-1]
