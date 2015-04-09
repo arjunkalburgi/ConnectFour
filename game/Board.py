@@ -66,35 +66,6 @@ class board:
 
 		return av_cols
 
-	def move_value(self, p, col): 
-		'''
-		If player p moves to columns col, how many points is that value worth?
-		This function is GREEEEEDY
-
-		This Heuristic Function is set up on the logic that setting or breaking
-		up a ConnectFour is highest priority. Next is setting up or breaking up 
-		a three-in-a-row. Next is close to the previous players turn. 
-		'''
-		# get place of where piece would go. 
-		for i, row in enumerate(self.board):
-			if  i == 6 or self.board[i + 1][col] != 0: 
-				break
-				# row is the row of our spot
-				# i is the index of the row
-
-		# check for any three in a row
-		h = checkthree2(row, col, i, self.board)
-		if h: 
-			# if playing as p2 and the connect line 
-			# is a line for p2, then two will win.
-			# this case should be marked low.
-			if h == p == 2:
-				return -8
-			else: 
-				return 8 
-
-		return 0
-
 	def check_win(self): 
 		'''
 		Function looks for a four in three possible scenarios:
@@ -140,6 +111,35 @@ class board:
 					print("heyyyy player", self.board[6-j][6-i], "woooooonnnnn")
 					return self.board[6-j][6-i]
 		return False
+
+	def move_value(self, p, col): 
+		'''
+		If player p moves to columns col, how many points is that value worth?
+		This function is GREEEEEDY
+
+		This Heuristic Function is set up on the logic that setting or breaking
+		up a ConnectFour is highest priority. Next is setting up or breaking up 
+		a three-in-a-row. Next is close to the previous players turn. 
+		'''
+		# get place of where piece would go. 
+		for i, row in enumerate(self.board):
+			if  i == 6 or self.board[i + 1][col] != 0: 
+				break
+				# row is the row of our spot
+				# i is the index of the row
+
+		# check for any three in a row
+		h = checkthree2(row, col, i, self.board)
+		if h: 
+			# if playing as p2 and the connect line 
+			# is a line for p2, then two will win.
+			# this case should be marked low.
+			if h == p == 2:
+				return -8
+			else: 
+				return 8 
+
+		return 0
 
 	def clear_board(self): 
 		'''
