@@ -1,5 +1,8 @@
 # ConnectFour
 
+This app is running at: http://connectfour275.herokuapp.com/
+Feel free to check it out! 
+
 INTRODUCTION
 
 This ConnectFour project was created for our CMPUT 275 class at the University of Alberta. The requirements of the project were that the project needed to be based off of things we learned in class. CMPUT 275 is all about algorithms (search graphs, other trees and dynamic programming) and also included some classes. We decided to do ConnectFour because it satisfies two of the course topics, dynamic programming and classes. 
