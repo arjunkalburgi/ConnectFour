@@ -2,6 +2,10 @@
 	{%extends "base.html" %}
 	{% block content %}
 	<div style="width:70%; font-size: large">
+
+
+
+
 		<b>INTRODUCTION</b><br/><br/>
 
 		This ConnectFour project was created for our CMPUT 275 class at the University of Alberta. The requirements of the project were that the project needed to be based off of things we learned in class. CMPUT 275 is all about algorithms (search graphs, other trees and dynamic programming) and also included some classes. We decided to do ConnectFour because it satisfies two of the course topics, dynamic programming and classes. <br/><br/>
@@ -9,6 +13,13 @@
 		Our program uses classes to create the Connect Four experience. The actual game logic is really made up of only two functions. The first is a class called board (found in <i>/game/Board.py</i>) that defines the basic rules of the classic Connect Four board, such as 7 rows and 7 columns, and includes numerous functions to play the game, such as adding piece, checking for a winner and clearing the board. The second is the minimax function called SBM (found in <i>/game/connectfour.py</i>) that uses dynamic programming to search through all the possible placements that the computer can put it’s piece, searching for the best move to return to the game. There is more about board and SBM below. <br/><br/>
 
 		The order that the following topics are discussed is the exact same order that we went through to create the game. Some of the topics are more about how the game works that about creating the game itself however, so for those of you attempting to recreate this game those topics may not be of much help. Additionally, explanations of how aspects of the game were created will not be discussed thoroughly, but should be discussed well enough to start you on your way. <br/><br/><br/><br/>
+
+
+
+
+
+
+
 
 
 		<b>BOARD</b><br/><br/>
@@ -19,6 +30,14 @@
 		The board class also has some other functions in it that would come later on in the game’s development. These include <i>clear_board()</i>, <i>immutable()</i>, and overwriting the comparison functions. The comparison functions should be overwritten for all classes and thus done so here. Even though the game does not use them explicitly, the class should be able to stand on it’s own and therefore are present to make it more complete.<br/><br/>
 
 		The other function placed in <i>Board.py</i>, namely, <i>checkthree2()</i> is discussed below. <br/><br/><br/><br/>
+
+
+
+
+
+
+
+
 
 
 		<b>MINIMAX</b><br/><br/>
@@ -39,16 +58,42 @@
 
 
 
+
+
+
+
+
 		<b>HEURISTIC</b><br/><br/>
 
-		Heuristic part gives the value of each possible move.<br/>
-		There are two important functions used in this part, one for checking all connections (checkthree2) and one for returning values for each kind of connections. For the checkthree2 function, it check all diagonals to see if there might be a three-connection. If there is, it will return the player who is going to build this connection. This value will go into the move_value. The move_value function will first look for the deepest row it could get to with the input column, and i is the index of the row.  In this game the computer is set to number 1 and player is 2. If the return value in checkthree function is equals to p and 2, that means the computer is supposed to stop going this step, or it may help player win, so this will return a -8. If it’s not , which means this is the step that helps computer win, thus we return a 8 for this case. <br/><br/>
+		A heuristic evaluation is a review methodology for a quick, cheap and informative way of assessing an  interface such as game state. A set of heuristics or general rules of thumb, are used to critique and give values to this game state. At the end of each heuristic evaluation you end up with an overall estimation of the value of the game state. Based on this description, you should be able to figure out how our heuristic function can return a value to the minimax function for a particular move. <br/><br/>
 
-		Actually the original idea of the heuristic part is using two checking functions. Besides the checkthree function, we have another one called checkfour to stop player when there is a three-connection already. This is designed to return a value 10 at first, but later I found that it is redundant because the checkthree function could also solve this case.<br/><br/><br/><br/>
+		Our function, <i>move_value()</i> in the <i>board</i> class, first determines the row location of where the piece would be, thus getting both the row and column data. Then it estimates this value using another function, <i>checkthree2()</i> located at the bottom of the <i>Board.py</i> file, to check if combinations exist on the board. For example, <i>checkthree2()</i> will look if there are pieces in the board both to the left and to the right of the current piece. Then, based on whose turn the minimax is trying to give a value to, will return whether or not that is a good or bad choice. If it makes or stops a combination of three it will give a high value, but if it makes a combination of three for the opponent it will give a low value. Naturally, if a combination of three does not exist, the function will return a neutral value, namely 0. <br/><br/>
+
+		Along with <i>checkthree2()</i> there are sub-functions to help it check for diagonal combinations. The heuristic here is so big that it was getting really confusing to write, so we broke it down into sub-functions. <br/><br/>
+
+		It should also be mentioned that we went through several iterations of this heuristic function. All of <i>checkfour()</i>, <i>checkfour2()</i> and <i>checkthree()</i> were created before we finally settled with <i>checkthree2()</i>. We struggled a lot with trying to make the heuristic function any good, it was really tough to create of all those cases and then giving them values. Eventually we settled for <i>checkthree2()</i> because it seemed to work a majority of the time. Sometimes you can play the computer and it acts very stupid, this is due to bugs in the heuristic function not properly evaluating cases. In a more perfect world, our heuristic would have all kinds of different values to evaluate plays with, and our minimax would aggressively use the evaluations. However, in the time constraints we had on the project, and considering how ridiculously intimidating the process of creating a proper heuristic is, it made more sense for us to work on other areas of the project. <br/><br/><br/><br/>
+
+
+
+
+
+
+
 
 		<b>LEVELS</b><br/><br/>
 
-		In selecting the difficulty level of the game, the user is allowed to choose three different levels (found in the in home page). When a user chooses a difficulty and clicks submit, a corresponding number will be stored in localStorage. When computing the computer’s turn, the server uses this value for depth. Depth decides how many times the computer would go through to calculate the most valuable step. For more depth it has, the computer would consider more steps and run the minimax function for more times. This would make the computer a tougher opponent and make it more interesting for player to play this game, however the higher depth means more calculations and this will make the server slow. At first we put 5 levels and level 5 means depth of 9, however this take too much time for computer to make one step (up to 30 seconds!), and level 1, which means depth 1, is so easy that the you could win this game in four steps. Thus we reduce the number of levels to three and try to avoid the “too slow” or “too stupid” conditions. The depth we choose is 3, 5, or 7, depending on the user’s .<br/><br/><br/><br/>
+		In selecting the difficulty level of the game, the user is allowed to choose three different levels (found in the in home page). When a user chooses a difficulty and clicks submit, a corresponding number will be stored in localStorage. When computing the computer’s turn, the client sends this value to the server to use as the depth of the minimax function. A reminder, the depth will decide how many times the minimax function is recursively called. The larger the depth value, the more computation the computer will compute and the longer the computer takes to play it’s turn. However, it would also make the computer a tougher opponent since it thinks further down the game. <br/><br/>
+
+		Right now there are three different levels that the user can choose, corresponding to depths of 3, 5, and 7. Previously we had 5 levels corresponding to depths of 1, 3, 5, 7, and 9. We decided to change this however as a depth of 9 takes too long per step (up to 30 seconds!), and a depth of 1 made the computer so easy that you could win the game in four steps. Thus we reduce the number of levels to three to avoid the “too slow” and “too stupid” conditions. <br/><br/><br/><br/>
+
+
+
+
+
+
+
+
+
 
 		<b>FLASK</b><br/><br/>
 
@@ -58,12 +103,27 @@
 
 		If you want to recreate our app, I would recommend starting with this tutorial. When you are installing extensions you only need to install the flask extension and you can skip most parts of tutorial (only part one, two and fifteen are vital for this app). <br/><br/><br/><br/>
 
+
+
+
+
+
+
+
+
 		<b>AJAX REQUESTS </b><br/><br/>
 
 		AJAX stands for Asynchronous JavaScript and XML, it is not a new programming language or technique, but it is very useful for exchanging data between a client and a server for websites and web-applications. What makes it so useful is that AJAX can be used to update parts of a web page without reloading the whole page.<br/>
 		Generally, computer’s and users interact by: the user inputs some data or makes a choice by clicking a button that sends the data to the server. The server takes a look at the data and sends back a whole new web page, which is loaded into the browser. Obviously reloading a page every time you want to do something is annoying and time-consuming for the user, especially when you consider our ConnectFour where we really only want to change the colour of simple HTML elements. XMLHttpRequest (AJAX Request) moves the browser-server interaction to behind the scenes, so the user can just keep on playing with the same page, even while elements on the page are talking to the server! This is perfect for our use! To implement AJAX Requests we again mostly followed the guide on the aforementioned tutorial. We simplified the AJAX requests from there and added requests for each function that we have that required data from our python files. <br/>
 		AJAX requests are asynchronous, which means that they can run parallel to other processes. Unfortunately for us, we needed each step to be synchronous, so we could control whether or not to continue on once we check if there was a winner. In <i>play()</i> we used the fact that AJAX allows us to write code once the function returns back to the client in order to avoid its asynchronous nature. <br/>
 		On the server side of each of these AJAX requests we manipulate the board depending on which request it is using our previous python game code. The server side of the AJAX requests are in <i>/app/views.py</i>. Here you can get a deeper look at how similar this is to our previous python only code, you can find all the same function calls (in python) as <i>test.py</i>! You’ll notice that for all these AJAX function calls, what is returned to us is always something ‘jsonified’. This is because AJAX only works with strings, we can only communicate strings across. Anything that is not a string, must be made a string and parsed on the other side.<br/><br/><br/><br/>
+
+
+
+
+
+
+
 
 
 		<b>HEROKU and Sessions</b><br/><br/>
