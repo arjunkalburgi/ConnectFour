@@ -12,7 +12,7 @@ With the help of mentors from the Computer Engineering Club, I built the Flask a
 
 Though I'm extremely proud of the project, feedback from friends was strongly against the design. It was fun to play against the interestingly quirky AI, but the bright primary colours were what people really commented on. 
 
-Visit the site to see for yourself! 
+[Visit the site to see for yourself!](https://connectfour275.herokuapp.com/)
 
 
 
