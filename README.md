@@ -1,7 +1,22 @@
 # ConnectFour
 
-This app is running at: http://connectfour275.herokuapp.com/
-Feel free to check it out! 
+### The Goal 
+
+The requirements of the project were that the project needed to be based off of things we learned in class (algorithms). Most projects were games with GUI's that were shown in-class. I wanted it to be a website, as websites are more accessible. 
+
+### The Approach 
+
+With the help of mentors from the Computer Engineering Club, I built the Flask and Web aspects of the project. Doing design myself as well. 
+
+### The Result
+
+Though I'm extremely proud of the project, feedback from friends was strongly against the design. It was fun to play against the interestingly quirky AI, but the bright primary colours were what people really commented on. 
+
+Visit the site to see for yourself! 
+
+
+
+#### Below is the README written as of April 2015
 
 INTRODUCTION
 
